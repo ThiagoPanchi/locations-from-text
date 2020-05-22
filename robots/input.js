@@ -1,7 +1,7 @@
 const readline = require('readline-sync');
 const rp = require('request-promise');
 const $ = require('cheerio');
-const fs = require('fs');
+
 
 function robot(content){
   
