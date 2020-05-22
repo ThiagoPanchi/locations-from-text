@@ -1,12 +1,15 @@
 const readline = require('readline-sync');
 const rp = require('request-promise');
 const $ = require('cheerio');
+const state = require('./state');
 
+async function robot(){
+  const content = {};
 
-function robot(content){
-  
   content.url = getUrl();
-  content.contentTitle = await getTitle(content); 
+  content.contentTitle = await getTitle(content);
+  
+  state.saveTemp(content);
   
   function getUrl(){
     return readline.question('Insira o link do conteúdo desejado (ex:https://brasilescola.uol.com.br/historiab): ');
@@ -21,6 +24,7 @@ function robot(content){
     }).catch((err)=>{
       console.log({error: err});
     });
+    
     return urlTitle;
   }
 
