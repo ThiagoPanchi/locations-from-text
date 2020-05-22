@@ -1,34 +1,23 @@
 const rp = require('request-promise');
 const $ = require('cheerio');
+const robots = {
+  url: require('./robots/input')
+}
 
 
 
 async function start(){
-
   const content = {};
-
-  content.url = getUrl();
-  content.contentTitle = await getTitle(content);  
+  robots.url(content);
+   
   content.originalContent = await getContent(content);
   content.referenceUrls =  await getLinks(content);
 
   console.log(content);
 
-  function getUrl(){
-    const url = 'https://brasilescola.uol.com.br/historiab';
-    return url;
-  }
 
-  async function getTitle(content){
-    
-    const urlTitle = rp(content.url).then((html)=>{
-      return $('.titulo-definicao',html).text();
 
-    }).catch((err)=>{
-      console.log({error: err});
-    });
-    return urlTitle;
-  }
+
 
   async function getContent(content){
     const fullContent = rp(content.url).then((html)=>{
