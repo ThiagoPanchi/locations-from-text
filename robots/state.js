@@ -8,7 +8,6 @@ function save(content){
 
 function saveTemp(content){
   const contentString = JSON.stringify(content);
-  //console.log('Chegou aqui?')
   return fs.writeFileSync(contentTempFilePath, contentString);
 }
 
