@@ -9,6 +9,7 @@
     "readline-sync": "^1.4.10",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
-    "sbd": "^1.0.18"
+    "sbd": "^1.0.18",
+    "watson-developer-cloud": "^4.0.1"
   }
 }
