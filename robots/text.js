@@ -88,7 +88,9 @@ async function robot(){
       nlu.analyze({
         text: sentence,
         features: {
-          keywords:{}
+          keywords:{
+            limit: 2
+          }
         },
         language: "pt"
       }, (error, response) => {
