@@ -12,7 +12,7 @@ async function robot(){
   state.saveTemp(content);
   
   function getUrl(){
-    return readline.question('Insira o link do conteúdo desejado (ex:https://brasilescola.uol.com.br/historiab): ');
+    return readline.question('Insira o link do conteudo desejado (ex:https://brasilescola.uol.com.br/historiab): ');
 
   }
   async function getTitle(content){

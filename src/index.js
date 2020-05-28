@@ -8,10 +8,10 @@ const robots = {
 async function start(){
   
   //robots.url();
-  //await robots.text();
+  await robots.text();
   await robots.locations();
   const content = robots.state.load();
-  //console.log(content.sentences);
+  console.log(content.sentences);
 
 }
 
