@@ -73,7 +73,7 @@ async function robot(){
       content.sentences.push({
         text: sentences,
         keywords: [],
-        locations:[],
+        //locations:[],
         dates: []
       });
     });

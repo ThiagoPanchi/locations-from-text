@@ -3,6 +3,8 @@ const cities = require('all-the-cities');
 const nodeGeocoder = require('node-geocoder');
 const countries = require('../countries.json');
 const states = require('../states.json'); 
+const fs = require('fs');
+const contentTempFilePath = './locations.json';
 
 
 const options = {
@@ -12,7 +14,7 @@ const geocoder = nodeGeocoder(options);
 
 async function robot(){
   const content = state.load();
-  
+  content.locations = [];
   await getCitiesInContent(content);
   await getStatesInContent(content);
 
@@ -35,14 +37,24 @@ async function robot(){
             limit: 1 
           })
 
+          
           const cityStates = await geocoder.geocode(address);
           const stateName = cityStates[0].state;
           
-          content.sentences[j].locations.push({
+/*           locations.textLocation.push({
             city: cities[i].name,
             state: stateName,
             country: cities[i].country,
-            loc: cities[i].loc
+            loc: cities[i].loc,
+            sentence: content.sentence[j].text
+          }) */
+
+          content.locations.push({
+            city: cities[i].name,
+            state: stateName,
+            country: cities[i].country,
+            loc: cities[i].loc,
+            text: parsedText
           });          
         } 
         }
@@ -74,14 +86,15 @@ async function robot(){
             const geoLoc = await geocoder.geocode(address);
             //console.log(geoLoc);
     
-            content.sentences[i].locations.push({
+            content.locations.push({
               city: null,
               state: states.states[k].name,
               country: selectedCountry[0].sortname,
               loc: {
                 type: 'Point',
-                coordinates: [geoLoc[0].latitude,geoLoc[0].longitude]
+                coordinates: [geoLoc[0].latitude,geoLoc[0].longitude],
               },
+              text: parsedText
             });
           } 
         } 
