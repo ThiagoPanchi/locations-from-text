@@ -5,6 +5,7 @@ import * as content from './data/content.json';
 import './App.css';
 
 function App() {
+  const [activeContent, setActiveContent] = React.useState(null);
   return (
     <div className="App">
         
@@ -13,22 +14,36 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           />
+            
+           {content.locations.map(sentence => (
             <Marker 
-              //key={content.sentences[1].locations[0].loc.state[0]}
-              position={[
-                content.sentences[1].locations[0].loc.coordinates[0],
-                content.sentences[1].locations[0].loc.coordinates[1]
-              ]}
-            />
-           {content.sentences.locations.map(sentence => (
-            <Marker 
-              //key={sentence.state} 
+              key={sentence.text} 
               position={[
                 sentence.loc.coordinates[0],
                 sentence.loc.coordinates[1]
                 ]}
+              onClick={() => {
+                setActiveContent(sentence)
+              }}
             />
           ))}
+
+          {activeContent && 
+          <Popup 
+             position={[
+                activeContent.loc.coordinates[0],
+                activeContent.loc.coordinates[1]
+                ]}
+              onClose={() => {
+                setActiveContent(null);
+              }}
+          > 
+            <div>
+              <h2>{activeContent.text}</h2>
+            </div>
+          </Popup>         
+          }
+
         </Map>
       
     </div>
