@@ -3,8 +3,8 @@ const cities = require('all-the-cities');
 const nodeGeocoder = require('node-geocoder');
 const countries = require('../countries.json');
 const states = require('../states.json'); 
-const fs = require('fs');
-const contentTempFilePath = './locations.json';
+//const fs = require('fs');
+//const contentTempFilePath = './locations.json';
 
 
 const options = {
@@ -14,6 +14,7 @@ const geocoder = nodeGeocoder(options);
 
 async function robot(){
   const content = state.load();
+  
   content.locations = [];
   await getCitiesInContent(content);
   await getStatesInContent(content);
@@ -29,26 +30,21 @@ async function robot(){
           const parsedText = matchText.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z\s])/g, '');
 
 
-        if(parsedText.match(' '+cities[i].name+' ') && cities[i].country == "BR"){
+        if(parsedText.match(' '+cities[i].name+' ') && cities[i].country === "BR"){
      
           const address = ({
             city: cities[i].name,
             countryCode: cities[i].country,
-            limit: 1 
+            limit: 3 
           })
 
           
           const cityStates = await geocoder.geocode(address);
+          //console.log(cities[i]);
+          //console.log(cityStates);
+
           const stateName = cityStates[0].state;
           
-/*           locations.textLocation.push({
-            city: cities[i].name,
-            state: stateName,
-            country: cities[i].country,
-            loc: cities[i].loc,
-            sentence: content.sentence[j].text
-          }) */
-
           content.locations.push({
             city: cities[i].name,
             state: stateName,
@@ -80,11 +76,10 @@ async function robot(){
             const address = ({
               state: states.states[k].name,
               countryCode: selectedCountry[0].sortname,
-              limit:1
+              limit:3
             })
     
             const geoLoc = await geocoder.geocode(address);
-            //console.log(geoLoc);
     
             content.locations.push({
               city: null,

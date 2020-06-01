@@ -21,6 +21,7 @@ async function robot(){
   content.sentences = [];
   await breakContentIntoSentences(content);
   await getSentencesKeywords(content);
+  content.dates = [];
   await getDatesfromSentences(content);
 
   state.saveTemp(content);
@@ -73,8 +74,6 @@ async function robot(){
       content.sentences.push({
         text: sentences,
         keywords: [],
-        //locations:[],
-        dates: []
       });
     });
   }
@@ -106,8 +105,14 @@ async function robot(){
   }
   async function getDatesfromSentences(content){
      
+    
     for(i=0; i<content.sentences.length; i++){
-      content.sentences[i].dates = content.sentences[i].text.match(/\d{4}/gm);
+      if(content.sentences[i].text.match(/\d{4}/gm)){
+        content.dates.push({
+          date: content.sentences[i].text.match(/\d{4}/gm),
+          text: content.sentences[i].text
+        });
+      }
     }
   } 
 }
